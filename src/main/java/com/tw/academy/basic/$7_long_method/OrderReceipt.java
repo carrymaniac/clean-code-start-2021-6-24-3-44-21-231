@@ -25,17 +25,30 @@ public class OrderReceipt {
         printHeaders(output);
         printCustomerInfo(output);
         // prints lineItems
-        double totalSalesTx = 0d;
-        double totalAmount = 0d;
         printItemList(output);
-        for (LineItem lineItem : o.getLineItems()) {
-            double salesTax = lineItem.totalAmount() * .10;
-            totalSalesTx += salesTax;
-            totalAmount += lineItem.totalAmount() + salesTax;
-        }
+        double totalSalesTx = getTotalSalesTx();
+        double totalAmount = getTotalAmount(totalSalesTx);
         PrintsTotalStateTax(output, totalSalesTx);
         PrintTotalAmount(output, totalAmount);
         return output.toString();
+    }
+
+    private double getTotalAmount(double totalSalesTx) {
+        double totalAmount = 0d;
+        for (LineItem lineItem : o.getLineItems()) {
+            totalAmount += lineItem.totalAmount();
+        }
+        totalAmount += totalSalesTx;
+        return totalAmount;
+    }
+
+    private double getTotalSalesTx() {
+        double totalSalesTx = 0d;
+        for (LineItem lineItem : o.getLineItems()) {
+            double salesTax = lineItem.totalAmount() * .10;
+            totalSalesTx += salesTax;
+        }
+        return totalSalesTx;
     }
 
     private void printItemList(StringBuilder output) {
