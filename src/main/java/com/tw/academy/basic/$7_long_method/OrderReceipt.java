@@ -27,9 +27,8 @@ public class OrderReceipt {
         // prints lineItems
         printItemList(output);
         double totalSalesTx = getTotalSalesTx();
-        double totalAmount = getTotalAmount(totalSalesTx);
         PrintsTotalStateTax(output, totalSalesTx);
-        PrintTotalAmount(output, totalAmount);
+        PrintTotalAmount(output, getTotalAmount(totalSalesTx));
         return output.toString();
     }
 
