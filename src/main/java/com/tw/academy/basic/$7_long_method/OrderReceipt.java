@@ -22,19 +22,11 @@ public class OrderReceipt {
     //todo: rename -- Tom
     public String printReceipt() {
         StringBuilder output = new StringBuilder();
-
-        // print headers
-        output.append("======Printing Orders======\n");
-
-        // print date, bill no, customer name
-//        output.append("Date - " + order.getDate();
-        output.append(o.getCustomerName());
-        output.append(o.getCustomerAddress());
-//        output.append(order.getCustomerLoyaltyNumber());
-
+        printHeaders(output);
+        printCustomerInfo(output);
         // prints lineItems
-        double totSalesTx = 0d;
-        double tot = 0d;
+        double totalSalesTx = 0d;
+        double totalAmount = 0d;
         for (LineItem lineItem : o.getLineItems()) {
             output.append(lineItem.getDescription());
             output.append('\t');
@@ -47,17 +39,30 @@ public class OrderReceipt {
 
             // calculate sales tax @ rate of 10%
             double salesTax = lineItem.totalAmount() * .10;
-            totSalesTx += salesTax;
+            totalSalesTx += salesTax;
 
             // calculate total amount of lineItem = price * quantity + 10 % sales tax
-            tot += lineItem.totalAmount() + salesTax;
+            totalAmount += lineItem.totalAmount() + salesTax;
         }
-
-        // prints the state tax
-        output.append("Sales Tax").append('\t').append(totSalesTx);
-
-        // print total amount
-        output.append("Total Amount").append('\t').append(tot);
+        PrintsTotalStateTax(output, totalSalesTx);
+        PrintTotalAmount(output, totalAmount);
         return output.toString();
+    }
+
+    private void PrintTotalAmount(StringBuilder output, double totalAmount) {
+        output.append("Total Amount").append('\t').append(totalAmount);
+    }
+
+    private void PrintsTotalStateTax(StringBuilder output, double totalSalesTx) {
+        output.append("Sales Tax").append('\t').append(totalSalesTx);
+    }
+
+    private void printCustomerInfo(StringBuilder output) {
+        output.append(o.getCustomerName());
+        output.append(o.getCustomerAddress());
+    }
+
+    private void printHeaders(StringBuilder output) {
+        output.append("======Printing Orders======\n");
     }
 }
