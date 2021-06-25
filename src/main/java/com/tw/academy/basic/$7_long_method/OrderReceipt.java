@@ -14,21 +14,14 @@ public class OrderReceipt {
         this.o = o;
     }
 
-    //Deprecated
-    public String printCustomerName() {
-        return o.getCustomerName();
-    }
-
-    //todo: rename -- Tom
     public String printReceipt() {
         StringBuilder output = new StringBuilder();
         printHeaders(output);
         printCustomerInfo(output);
-        // prints lineItems
         printItemList(output);
         double totalSalesTx = getTotalSalesTx();
-        PrintsTotalStateTax(output, totalSalesTx);
-        PrintTotalAmount(output, getTotalAmount(totalSalesTx));
+        printsTotalStateTax(output, totalSalesTx);
+        printTotalAmount(output, getTotalAmount(totalSalesTx));
         return output.toString();
     }
 
@@ -67,11 +60,11 @@ public class OrderReceipt {
         output.append('\n');
     }
 
-    private void PrintTotalAmount(StringBuilder output, double totalAmount) {
+    private void printTotalAmount(StringBuilder output, double totalAmount) {
         output.append("Total Amount").append('\t').append(totalAmount);
     }
 
-    private void PrintsTotalStateTax(StringBuilder output, double totalSalesTx) {
+    private void printsTotalStateTax(StringBuilder output, double totalSalesTx) {
         output.append("Sales Tax").append('\t').append(totalSalesTx);
     }
 
